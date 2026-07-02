@@ -31,33 +31,48 @@
   --transition-speed: 0.5s;
 }
 body.day-mode {
-  --cream:    #FFF0F0;
-  --cream2:   #FFE0E0;
-  --cream3:   #FFCCCC;
+  --cream:    #FFF6F5;
+  --cream2:   #FFE8E8;
+  --cream3:   #F8E0E0;
   --ink:      #2A0808;
   --ink2:     #5C1818;
-  --muted:    #8B4040;
-  --nav-bg:   rgba(255,240,240,0.94);
-  --card-bg:  #2A0808;
-  --card-bg2: #3A1010;
-  --page-bg:  #FFF0F0;
-  --border:   rgba(232,64,64,0.2);
+  --muted:    #7F4A4A;
+  --nav-bg:   rgba(255, 249, 248, 0.94);
+  --card-bg:  #FFFFFF;
+  --card-bg2: #FFF0EF;
+  --page-bg:  #FFF6F5;
+  --border:   rgba(232,64,64,0.18);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  background:
-    radial-gradient(ellipse 900px 600px at 15% -5%, var(--accent-light), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 100% 20%, var(--accent-light), transparent 55%),
-    linear-gradient(180deg, var(--cream) 0%, var(--cream2) 45%, var(--cream3) 100%);
+  background-color: var(--cream);
+  background-image:
+    url("bg/cr_dark.png"),
+    radial-gradient(circle at 15% 5%, rgba(232,64,64,0.16), transparent 32%),
+    radial-gradient(circle at 100% 20%, rgba(232,64,64,0.12), transparent 45%),
+    linear-gradient(180deg, rgba(21,6,6,0.78) 0%, rgba(15,4,4,0.82) 45%, rgba(10,3,3,0.95) 100%);
+  background-size: cover, 900px 600px, 700px 500px, auto;
+  background-position: center, 15% 5%, 100% 20%, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, normal, normal, normal;
   color: var(--ink);
   font-family: var(--font-body), serif;
   font-weight: 400;
   overflow-x: hidden;
   transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
   min-height: 100vh;
+}
+
+body.day-mode {
+  background-image:
+    url("bg/cr_light.png"),
+    radial-gradient(circle at 15% 5%, rgba(232,64,64,0.12), transparent 35%),
+    radial-gradient(circle at 100% 20%, rgba(232,64,64,0.08), transparent 48%),
+    linear-gradient(180deg, rgba(255,250,249,0.88) 0%, rgba(255,239,238,0.82) 45%, rgba(255,244,243,0.96) 100%);
+  background-color: var(--cream);
 }
 
 ::selection { background: var(--accent-mid); color: var(--ink); }
@@ -92,7 +107,10 @@ nav {
 .nav-logo {
   font-family: var(--font-display); font-weight: 600;
   font-size: 1.25rem; letter-spacing: 1px; color: var(--ink);
-  display: flex; align-items: baseline; gap: 8px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo img {
+  width: 34px; height: 34px; object-fit: contain;
 }
 .nav-logo em { font-style: normal; }
 .nav-parent {
@@ -172,8 +190,7 @@ nav {
   width: 100%; max-width: 560px;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: 0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(232,64,64,0.06);
+  box-shadow: 0 18px 38px rgba(0,0,0,0.25);
   animation: floaty 6s ease-in-out infinite;
 }
 .hero-screenshot img { width: 100%; height: auto; display: block; }
@@ -276,8 +293,9 @@ blockquote {
 /* ── Pricing ── */
 .pricing { background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .pricing-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 26px; max-width: 900px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 360px));
+  justify-content: center;
+  gap: 26px; max-width: 900px; margin: 0 auto;
 }
 .price-card {
   background: linear-gradient(160deg, var(--card-bg2), var(--card-bg));
@@ -423,7 +441,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
 
 <!-- Nav -->
 <nav>
-  <a href="#" class="nav-logo">Novelty <span class="nav-parent">by El Muntasir</span></a>
+  <a href="#" class="nav-logo"><img src="icons/novelty.png" alt="Novelty logo">Novelty <span class="nav-parent">by El Muntasir</span></a>
   <div class="nav-right">
     <a href="#features" class="nav-link">Features</a>
     <a href="#showcase" class="nav-link">Showcase</a>
@@ -448,7 +466,6 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
     <p class="hero-sub">Novelty is a premium desktop app for worldbuilders and authors. Plan intricate lore, write distraction-free, and export professional manuscripts — all wrapped in a stunning, highly-customizable interface.</p>
     <div class="hero-actions">
       <a href="#download" class="btn-primary">⬇ Download Novelty</a>
-      <a href="https://github.com/elmuntasir/Novelty" target="_blank" rel="noopener" class="btn-ghost">View on GitHub</a>
     </div>
     <div class="hero-meta">
       <span><i class="dot"></i>Windows, Mac &amp; Linux</span>
@@ -459,7 +476,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
 
   <div class="hero-right">
     <div class="hero-screenshot">
-      <img src="ss/character.jpg" alt="Novelty character relationship map and profile editor">
+      <img src="icons/novelty.png" alt="Novelty app icon">
     </div>
   </div>
 
@@ -533,7 +550,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Chapter and section navigation stays out of your way until you need it, so you can stay in the scene.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/editor.jpg" alt="Novelty distraction-free manuscript editor">
+        <img src="ss/editor.png" alt="Novelty distraction-free manuscript editor">
       </div>
     </div>
 
@@ -544,7 +561,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Build relationship maps, track crucial details, and link characters straight into your prose as you write.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/character.jpg" alt="Novelty character profile and relationship graph">
+        <img src="ss/character.png" alt="Novelty character profile and relationship graph">
       </div>
     </div>
 
@@ -555,7 +572,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Streaks, daily word counts, and productivity heatmaps keep you honest about the writing that actually happened.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/dashboard.jpg" alt="Novelty writing dashboard and analytics">
+        <img src="ss/dashboard.png" alt="Novelty writing dashboard and analytics">
       </div>
     </div>
 
@@ -566,7 +583,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>From Crimson to Dark Mythic, pick a look that matches your story — with live particle effects and a day/night toggle for every one.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/appearance.jpg" alt="Novelty theme and appearance settings">
+        <img src="ss/appearance.png" alt="Novelty theme and appearance settings">
       </div>
     </div>
 
@@ -577,7 +594,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Custom chapter styles and front matter, exported straight to a polished PDF or EPUB — ready for real readers.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/exporter.jpg" alt="Novelty manuscript exporter for PDF and EPUB">
+        <img src="ss/exporter.png" alt="Novelty manuscript exporter for PDF and EPUB">
       </div>
     </div>
 
@@ -588,7 +605,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Automatic local backups mean a crash or a bad update never costs you a chapter.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/backup.jpg" alt="Novelty automatic backup system">
+        <img src="ss/backup.png" alt="Novelty automatic backup system">
       </div>
     </div>
   </div>
@@ -666,28 +683,28 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
     <h2>Early access is open.</h2>
     <p>Novelty is in active development — download the current build for your platform below. New builds are pushed to the same release, so this link always stays current.</p>
     <div class="download-buttons">
-      <a class="dl-btn" href="https://github.com/elmuntasir/Novelty/releases/download/v1/Novelty_0.1.0_aarch64.dmg.zip">
+      <a class="dl-btn" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/Novelty_0.1.0_aarch64.dmg.zip">
         <span class="dl-btn-icon"></span>
         <span class="dl-btn-text"><span class="os">macOS</span><span class="sub">Apple Silicon · .dmg</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty/releases/download/v1/novelty-windows-x64-installer.zip">
+      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-x64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">x64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty/releases/download/v1/novelty-windows-arm64-installer.zip">
+      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-arm64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">ARM64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty/releases/download/v1/novelty-linux-x64-appimage">
+      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-appimage">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · AppImage</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty/releases/download/v1/novelty-linux-x64-deb">
+      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-deb">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · .deb</span></span>
       </a>
     </div>
-    <div class="download-version">v0.1.0 · Early Access · <a href="https://github.com/elmuntasir/Novelty" target="_blank" rel="noopener" style="color:var(--accent)">Release notes on GitHub ↗</a></div>
+    <div class="download-version">v0.1.0 · Early Access · <a href="https://github.com/elmuntasir/Novelty-apps" target="_blank" rel="noopener" style="color:var(--accent)">Release notes on GitHub ↗</a></div>
   </div>
 </section>
 
@@ -733,7 +750,6 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
 <footer>
   <a href="https://elmuntasir.vercel.app" class="footer-logo">Novelty <em>·</em> El Muntasir</a>
   <div class="footer-links">
-    <a href="https://github.com/elmuntasir/Novelty" target="_blank" rel="noopener">GitHub</a>
     <a href="terms_privacy/novelty_terms.html">Terms</a>
     <a href="terms_privacy/novelty_privacy.html">Privacy</a>
     <a href="mailto:el.muntasirs@gmail.com">Contact</a>
