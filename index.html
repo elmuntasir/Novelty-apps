@@ -416,6 +416,89 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
 .theme-indicator.visible { opacity: 1; transform: translateY(0); }
 .theme-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
+/* ── Download Warning Modal ── */
+#downloadWarningModal {
+  position: fixed; inset: 0; z-index: 100;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity 0.4s ease;
+}
+#downloadWarningModal.show {
+  display: flex; opacity: 1;
+}
+.modal-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 42px 40px;
+  max-width: 580px; width: 90%; max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 28px 64px rgba(0,0,0,0.45);
+  animation: modalSlideUp 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes modalSlideUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-icon {
+  font-size: 2.4rem; margin-bottom: 18px; display: block; text-align: center;
+}
+.modal-card h3 {
+  font-family: var(--font-display); font-size: 1.35rem;
+  color: var(--ink); margin-bottom: 12px; line-height: 1.3;
+}
+.modal-card > p {
+  color: var(--ink2); font-size: 0.95rem; line-height: 1.65;
+  margin-bottom: 24px;
+}
+.modal-steps {
+  background: var(--card-bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 20px; margin-bottom: 26px;
+}
+.modal-steps ol {
+  list-style: decimal; margin-left: 20px; color: var(--ink2);
+  font-size: 0.93rem; line-height: 1.7;
+}
+.modal-steps li { margin-bottom: 14px; }
+.modal-steps li strong { color: var(--ink); }
+.modal-code-block {
+  background: var(--cream3); border-left: 3px solid var(--accent);
+  border-radius: 4px; padding: 16px; margin: 18px 0; font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.87rem; color: var(--accent); overflow-x: auto; position: relative;
+  line-height: 1.5;
+}
+.copy-code-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--accent); color: #fff; border: none;
+  padding: 6px 12px; border-radius: 4px;
+  font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.5px;
+  cursor: pointer; transition: all 0.25s ease; z-index: 10;
+}
+.copy-code-btn:hover { background: #d33636; transform: scale(1.05); }
+.copy-code-btn.copied { background: #4caf50; }
+.modal-actions {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.modal-btn {
+  padding: 12px 24px; border-radius: 4px;
+  font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 1px;
+  text-transform: uppercase; border: none; cursor: pointer;
+  transition: all 0.25s ease;
+}
+.modal-btn.primary {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 6px 18px rgba(232,64,64,0.3);
+}
+.modal-btn.primary:hover {
+  background: #d33636; box-shadow: 0 10px 26px rgba(232,64,64,0.4);
+  transform: translateY(-1px);
+}
+.modal-btn.secondary {
+  background: var(--accent-light); color: var(--ink2);
+  border: 1px solid var(--border);
+}
+.modal-btn.secondary:hover {
+  background: var(--accent-mid); color: var(--ink);
+}
+
 /* ── Reveal on scroll ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
 .reveal.in { opacity: 1; transform: translateY(0); }
@@ -683,23 +766,23 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
     <h2>Early access is open.</h2>
     <p>Novelty is in active development — download the current build for your platform below. New builds are pushed to the same release, so this link always stays current.</p>
     <div class="download-buttons">
-      <a class="dl-btn" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/Novelty_0.1.0_aarch64.dmg.zip">
+      <a class="dl-btn" data-os="macos" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/Novelty_0.1.0_aarch64.dmg.zip">
         <span class="dl-btn-icon"></span>
         <span class="dl-btn-text"><span class="os">macOS</span><span class="sub">Apple Silicon · .dmg</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-x64-installer.zip">
+      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-x64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">x64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-arm64-installer.zip">
+      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-arm64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">ARM64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-appimage">
+      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-appimage.zip">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · AppImage</span></span>
       </a>
-      <a class="dl-btn secondary" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-deb">
+      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-deb.zip">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · .deb</span></span>
       </a>
@@ -756,6 +839,20 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
   </div>
   <span>© 2026 El Muntasir · Novelty</span>
 </footer>
+
+<!-- Download Warning Modal -->
+<div id="downloadWarningModal">
+  <div class="modal-card">
+    <span class="modal-icon">⚠️</span>
+    <h3 id="modalTitle">Before you open Novelty on macOS</h3>
+    <p id="modalDesc">macOS flags unsigned apps downloaded from the internet as "damaged" — this is normal for indie apps, and Novelty is safe to run.</p>
+    <div class="modal-steps" id="modalSteps"></div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="dismissDownloadWarning()">I Understand</button>
+      <button class="modal-btn primary" onclick="proceedWithDownload()">Download Anyway</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ══════════════════════════════════════════
@@ -898,6 +995,112 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ══════════════════════════════════════════
+   DOWNLOAD WARNING MODAL — Platform detection & localStorage
+══════════════════════════════════════════ */
+let pendingDownloadUrl = null;
+
+function getOS() {
+  const ua = navigator.userAgent;
+  if (ua.indexOf('Mac') > -1 && ua.indexOf('iPhone') === -1 && ua.indexOf('iPad') === -1) return 'macos';
+  if (ua.indexOf('Windows') > -1) return 'windows';
+  return 'other';
+}
+
+function getModalContent(os) {
+  if (os === 'macos') {
+    return {
+      title: 'Before you open Novelty on macOS',
+      desc: 'macOS flags unsigned apps downloaded from the internet as "damaged" — this is normal for indie apps, and Novelty is safe to run.',
+      steps: `
+        <ol>
+          <li>Move <strong>Novelty.app</strong> to your <strong>Applications</strong> folder (if you haven't already).</li>
+          <li>Open <strong>Terminal</strong> (press Cmd+Space, type "Terminal", hit Enter).</li>
+          <li>Paste this and press Enter:
+            <div class="modal-code-block">
+              <button class="copy-code-btn" onclick="copyToClipboard('xattr -cr /Applications/Novelty.app')">Copy</button>
+              xattr -cr /Applications/Novelty.app
+            </div>
+          </li>
+          <li>Open Novelty as usual — it'll work now.</li>
+        </ol>
+      `,
+    };
+  } else if (os === 'windows') {
+    return {
+      title: 'Before you open Novelty on Windows',
+      desc: 'Windows SmartScreen blocks apps from unknown publishers — this is normal for indie apps, and Novelty is safe to run.',
+      steps: `
+        <ol>
+          <li>Extract the downloaded .zip file to your desired location.</li>
+          <li>Right-click the <strong>Novelty.exe</strong> installer and select <strong>"Run as administrator"</strong>.</li>
+          <li>When SmartScreen appears, click <strong>"More info"</strong>, then <strong>"Run anyway"</strong>.</li>
+          <li>Complete the installation — Novelty will open normally after.</li>
+        </ol>
+      `,
+    };
+  }
+  return null;
+}
+
+function showDownloadWarning(os, downloadUrl) {
+  const content = getModalContent(os);
+  if (!content) {
+    // No warning needed, proceed with download
+    if (downloadUrl) window.location.href = downloadUrl;
+    return;
+  }
+  
+  pendingDownloadUrl = downloadUrl;
+  document.getElementById('modalTitle').textContent = content.title;
+  document.getElementById('modalDesc').textContent = content.desc;
+  document.getElementById('modalSteps').innerHTML = content.steps;
+  
+  document.getElementById('downloadWarningModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function dismissDownloadWarning() {
+  document.getElementById('downloadWarningModal').classList.remove('show');
+  document.body.style.overflow = 'auto';
+  pendingDownloadUrl = null;
+}
+
+function proceedWithDownload() {
+  if (pendingDownloadUrl) {
+    dismissDownloadWarning();
+    window.location.href = pendingDownloadUrl;
+  }
+}
+
+function copyToClipboard(text) {
+  const btn = event.target;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = '✗ Failed';
+    setTimeout(() => { btn.textContent = originalText; }, 2000);
+  });
+}
+
+// Attach click handlers to all download buttons
+window.addEventListener('load', () => {
+  document.querySelectorAll('[data-os]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const os = btn.getAttribute('data-os');
+      const url = btn.getAttribute('href');
+      showDownloadWarning(os, url);
+    });
+  });
+});
 </script>
 </body>
 </html>
