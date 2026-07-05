@@ -766,23 +766,23 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
     <h2>Early access is open.</h2>
     <p>Novelty is in active development — download the current build for your platform below. New builds are pushed to the same release, so this link always stays current.</p>
     <div class="download-buttons">
-      <a class="dl-btn" data-os="macos" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/Novelty_0.1.0_aarch64.dmg.zip">
+      <a class="dl-btn" data-os="macos" href="https://github.com/elmuntasir/Novelty-apps/releases/latest/download/Novelty_0.1.0_aarch64.dmg.zip">
         <span class="dl-btn-icon"></span>
         <span class="dl-btn-text"><span class="os">macOS</span><span class="sub">Apple Silicon · .dmg</span></span>
       </a>
-      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-x64-installer.zip">
+      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/latest/download/novelty-windows-x64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">x64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-windows-arm64-installer.zip">
+      <a class="dl-btn secondary" data-os="windows" href="https://github.com/elmuntasir/Novelty-apps/releases/latest/download/novelty-windows-arm64-installer.zip">
         <span class="dl-btn-icon">▢</span>
         <span class="dl-btn-text"><span class="os">Windows</span><span class="sub">ARM64 · .zip</span></span>
       </a>
-      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-appimage.zip">
+      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/latest/download/novelty-linux-x64-appimage.zip">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · AppImage</span></span>
       </a>
-      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/download/v1/novelty-linux-x64-deb.zip">
+      <a class="dl-btn secondary" data-os="linux" href="https://github.com/elmuntasir/Novelty-apps/releases/latest/download/novelty-linux-x64-deb.zip">
         <span class="dl-btn-icon">◫</span>
         <span class="dl-btn-text"><span class="os">Linux</span><span class="sub">x64 · .deb</span></span>
       </a>
@@ -1095,7 +1095,7 @@ window.addEventListener('load', () => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const os = btn.getAttribute('data-os');
-      const url = btn.getAttribute('href');
+      const url = btn.getAttribute('href') || 'https://github.com/elmuntasir/Novelty-apps/releases/latest';
       showDownloadWarning(os, url);
     });
   });
