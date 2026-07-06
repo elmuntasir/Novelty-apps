@@ -1068,8 +1068,9 @@ function dismissDownloadWarning() {
 
 function proceedWithDownload() {
   if (pendingDownloadUrl) {
+    const url = pendingDownloadUrl;
     dismissDownloadWarning();
-    window.location.href = pendingDownloadUrl;
+    window.location.href = url;
   }
 }
 
