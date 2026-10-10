@@ -1103,7 +1103,10 @@ function showDownloadWarning(os, downloadUrl) {
   const content = getModalContent(os);
   if (!content) {
     // No warning needed, proceed with download
-    if (downloadUrl) window.location.href = downloadUrl;
+    if (downloadUrl) {
+      incrementDownloadCount();
+      window.location.href = downloadUrl;
+    }
     return;
   }
   
@@ -1125,6 +1128,7 @@ function dismissDownloadWarning() {
 function proceedWithDownload() {
   if (pendingDownloadUrl) {
     const url = pendingDownloadUrl;
+    incrementDownloadCount();
     dismissDownloadWarning();
     window.location.href = url;
   }
@@ -1158,27 +1162,46 @@ window.addEventListener('load', () => {
   });
 });
 
-// ── Live GitHub Download Counter ──
+// ── Live GitHub Download Counter (Base 100 + GitHub downloads) ──
+const BASE_DOWNLOADS = 100;
+let currentDownloads = BASE_DOWNLOADS;
+
+function incrementDownloadCount() {
+  currentDownloads += 1;
+  const dlEl = document.getElementById('dl-count');
+  const heroEl = document.getElementById('hero-dl-count');
+  if (dlEl) dlEl.textContent = currentDownloads.toLocaleString();
+  if (heroEl) heroEl.textContent = currentDownloads.toLocaleString();
+}
+
 async function fetchDownloadCount() {
   try {
     const res = await fetch(
       'https://api.github.com/repos/elmuntasir/Production/releases/tags/Novelty',
       { headers: { 'Accept': 'application/vnd.github.v3+json' } }
     );
-    if (!res.ok) return;
+    if (!res.ok) {
+      animateCount(document.getElementById('dl-count'), BASE_DOWNLOADS);
+      animateCount(document.getElementById('hero-dl-count'), BASE_DOWNLOADS);
+      return;
+    }
     const data = await res.json();
     const skip = ['.sig', 'latest.json'];
-    const total = (data.assets || [])
+    const ghTotal = (data.assets || [])
       .filter(a => !skip.some(s => a.name.endsWith(s) || a.name === s))
       .reduce((sum, a) => sum + (a.download_count || 0), 0);
-    animateCount(document.getElementById('dl-count'), total);
-    animateCount(document.getElementById('hero-dl-count'), total);
-  } catch (_) { /* silently fail — counters stay at — */ }
+    
+    currentDownloads = BASE_DOWNLOADS + ghTotal;
+    animateCount(document.getElementById('dl-count'), currentDownloads);
+    animateCount(document.getElementById('hero-dl-count'), currentDownloads);
+  } catch (_) {
+    animateCount(document.getElementById('dl-count'), BASE_DOWNLOADS);
+    animateCount(document.getElementById('hero-dl-count'), BASE_DOWNLOADS);
+  }
 }
 
 function animateCount(el, target) {
   if (!el) return;
-  if (target === 0) { el.textContent = '0'; return; }
   const duration = 1400;
   const start = performance.now();
   function step(now) {
