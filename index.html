@@ -50,7 +50,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--cream);
   background-image:
-    url("bg/cr_dark.png"),
+    url("avif/cr_dark.avif"),
     radial-gradient(circle at 15% 5%, rgba(232,64,64,0.16), transparent 32%),
     radial-gradient(circle at 100% 20%, rgba(232,64,64,0.12), transparent 45%),
     linear-gradient(180deg, rgba(21,6,6,0.78) 0%, rgba(15,4,4,0.82) 45%, rgba(10,3,3,0.95) 100%);
@@ -68,11 +68,29 @@ body {
 
 body.day-mode {
   background-image:
-    url("bg/cr_light.png"),
+    url("avif/cr_light.avif"),
     radial-gradient(circle at 15% 5%, rgba(232,64,64,0.12), transparent 35%),
     radial-gradient(circle at 100% 20%, rgba(232,64,64,0.08), transparent 48%),
     linear-gradient(180deg, rgba(255,250,249,0.88) 0%, rgba(255,239,238,0.82) 45%, rgba(255,244,243,0.96) 100%);
   background-color: var(--cream);
+}
+
+/* PNG fallback for browsers without AVIF support */
+@supports not (background-image: url("data:image/avif;base64,")) {
+  body {
+    background-image:
+      url("bg/cr_dark.png"),
+      radial-gradient(circle at 15% 5%, rgba(232,64,64,0.16), transparent 32%),
+      radial-gradient(circle at 100% 20%, rgba(232,64,64,0.12), transparent 45%),
+      linear-gradient(180deg, rgba(21,6,6,0.78) 0%, rgba(15,4,4,0.82) 45%, rgba(10,3,3,0.95) 100%);
+  }
+  body.day-mode {
+    background-image:
+      url("bg/cr_light.png"),
+      radial-gradient(circle at 15% 5%, rgba(232,64,64,0.12), transparent 35%),
+      radial-gradient(circle at 100% 20%, rgba(232,64,64,0.08), transparent 48%),
+      linear-gradient(180deg, rgba(255,250,249,0.88) 0%, rgba(255,239,238,0.82) 45%, rgba(255,244,243,0.96) 100%);
+  }
 }
 
 ::selection { background: var(--accent-mid); color: var(--ink); }
@@ -633,7 +651,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Streaks, daily word counts, and productivity heatmaps keep you honest about the writing that actually happened.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/dashboard.png" alt="Novelty writing dashboard and analytics">
+        <picture>
+          <source srcset="avif/dashboard.avif" type="image/avif">
+          <img src="ss/dashboard.png" alt="Novelty writing dashboard and analytics">
+        </picture>
       </div>
     </div>
 
@@ -644,7 +665,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Chapter and section navigation stays out of your way until you need it, so you can stay in the scene.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/editor.png" alt="Novelty distraction-free manuscript editor">
+        <picture>
+          <source srcset="avif/editor.avif" type="image/avif">
+          <img src="ss/editor.png" alt="Novelty distraction-free manuscript editor">
+        </picture>
       </div>
     </div>
 
@@ -655,7 +679,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Build relationship maps, track crucial details, and link characters straight into your prose as you write.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/character.png" alt="Novelty character profile and relationship graph">
+        <picture>
+          <source srcset="avif/character.avif" type="image/avif">
+          <img src="ss/character.png" alt="Novelty character profile and relationship graph">
+        </picture>
       </div>
     </div>
 
@@ -666,7 +693,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>From Crimson to Dark Mythic, pick a look that matches your story — with live particle effects and a day/night toggle for every one.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/appearance.png" alt="Novelty theme and appearance settings">
+        <picture>
+          <source srcset="avif/appearance.avif" type="image/avif">
+          <img src="ss/appearance.png" alt="Novelty theme and appearance settings">
+        </picture>
       </div>
     </div>
 
@@ -677,7 +707,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Custom chapter styles and front matter, exported straight to a polished PDF or EPUB — ready for real readers.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/exporter.png" alt="Novelty manuscript exporter for PDF and EPUB">
+        <picture>
+          <source srcset="avif/exporter.avif" type="image/avif">
+          <img src="ss/exporter.png" alt="Novelty manuscript exporter for PDF and EPUB">
+        </picture>
       </div>
     </div>
 
@@ -688,7 +721,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
         <p>Automatic local backups mean a crash or a bad update never costs you a chapter.</p>
       </div>
       <div class="showcase-row-img">
-        <img src="ss/backup.png" alt="Novelty automatic backup system">
+        <picture>
+          <source srcset="avif/backup.avif" type="image/avif">
+          <img src="ss/backup.png" alt="Novelty automatic backup system">
+        </picture>
       </div>
     </div>
   </div>
