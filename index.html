@@ -374,6 +374,21 @@ blockquote {
 .dl-btn-text .sub { display: block; font-size: 0.65rem; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; }
 .download-version { font-size: 0.75rem; letter-spacing: 1px; color: var(--muted); }
 
+/* ── Download Stat Counter ── */
+.dl-stat {
+  display: flex; align-items: baseline; justify-content: center; gap: 10px;
+  margin: -4px 0 28px;
+}
+.dl-stat-num {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 700;
+  color: var(--accent); letter-spacing: -1px; line-height: 1;
+  text-shadow: 0 0 24px rgba(232,64,64,0.35);
+}
+.dl-stat-label {
+  color: var(--muted); font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
 /* ── FAQ ── */
 .faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 14px; }
 .faq-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -572,6 +587,7 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
       <span><i class="dot"></i>Windows, Mac &amp; Linux</span>
       <span><i class="dot"></i>Early Access · v0.1.0</span>
       <span><i class="dot"></i>Free for your first book</span>
+      <span><i class="dot"></i><span id="hero-dl-count">—</span> Downloads</span>
     </div>
   </div>
 
@@ -800,6 +816,10 @@ footer > span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.3px; 
   <div class="download-inner">
     <div class="sec-eyebrow" style="justify-content:center"><div class="sec-line"></div><span>Get Novelty</span></div>
     <h2>Early access is open.</h2>
+    <div class="dl-stat">
+      <span class="dl-stat-num" id="dl-count">—</span>
+      <span class="dl-stat-label">downloads &amp; counting</span>
+    </div>
     <p>Novelty is in active development — download the current build for your platform below. New builds are pushed to the same release, so this link always stays current.</p>
     <div class="download-buttons">
       <a class="dl-btn" data-os="macos" href="https://github.com/elmuntasir/Production/releases/download/Novelty/novelty_mac.zip">
@@ -1137,6 +1157,40 @@ window.addEventListener('load', () => {
     });
   });
 });
+
+// ── Live GitHub Download Counter ──
+async function fetchDownloadCount() {
+  try {
+    const res = await fetch(
+      'https://api.github.com/repos/elmuntasir/Production/releases/tags/Novelty',
+      { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+    );
+    if (!res.ok) return;
+    const data = await res.json();
+    const skip = ['.sig', 'latest.json'];
+    const total = (data.assets || [])
+      .filter(a => !skip.some(s => a.name.endsWith(s) || a.name === s))
+      .reduce((sum, a) => sum + (a.download_count || 0), 0);
+    animateCount(document.getElementById('dl-count'), total);
+    animateCount(document.getElementById('hero-dl-count'), total);
+  } catch (_) { /* silently fail — counters stay at — */ }
+}
+
+function animateCount(el, target) {
+  if (!el) return;
+  if (target === 0) { el.textContent = '0'; return; }
+  const duration = 1400;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3); // cubic ease-out
+    el.textContent = Math.round(target * ease).toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+fetchDownloadCount();
 </script>
 </body>
 </html>
